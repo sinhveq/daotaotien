@@ -1,90 +1,99 @@
-<div>
-  <mat-form-field>
-    <input matInput placeholder="id" [(ngModel)]="giaovien.id">
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput placeholder="name" [(ngModel)]="giaovien.name">
-  </mat-form-field>
-  <button mat-raised-button (click)="addGV()" color="primary">Add</button>
-  </div>
-
 <h2>DANH SÁCH GIÁO VIÊN</h2>
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
   <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef style="font-family: 'Times New Roman', Times, serif;font-size: 18px; color:black"> <h4>STT</h4> </th>
+    <th mat-header-cell *matHeaderCellDef style="font-family: 'Times New Roman', Times, serif;font-size: 18px; color:black">
+      <h4>ID</h4>
+    </th>
     <td mat-cell *matCellDef="let element"> {{element.id}} </td>
   </ng-container>
   <!-- Name Column -->
   <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef style="font-family: 'Times New Roman', Times, serif;font-size: 18px; color:black"><h4>Name</h4>  </th>
+    <th mat-header-cell *matHeaderCellDef style="font-family: 'Times New Roman', Times, serif;font-size: 18px; color:black">
+      <h4>Name</h4>
+    </th>
     <td mat-cell *matCellDef="let element"> {{element.name}} </td>
   </ng-container>
   <ng-container matColumnDef="option">
-      <th mat-header-cell *matHeaderCellDef style="font-family: 'Times New Roman', Times, serif;font-size: 18px; color:black"><h4>View</h4>  </th>
-      <td mat-cell *matCellDef="let element"><mat-chip-list><mat-chip color="primary" selected>xem chi tiết</mat-chip></mat-chip-list> </td>
-    </ng-container>
+    <th mat-header-cell *matHeaderCellDef style="font-family: 'Times New Roman', Times, serif;font-size: 18px; color:black">
+      <h4>Funtion</h4>
+    </th>
+    <td mat-cell *matCellDef="let element">
+      <mat-chip-list>
+        <mat-chip color="primary" selected>view</mat-chip>
+      </mat-chip-list>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="hihi">
+    <th mat-header-cell *matHeaderCellDef style="font-family: 'Times New Roman', Times, serif;font-size: 18px; color:black">
+      <h4></h4>
+    </th>
+    <td mat-cell *matCellDef="let element">
+      <mat-chip color="accent" selected style="margin-top: 10px;margin-left: 20px;font-family: 'Times New Roman', Times, serif;font-size: 16px;"
+        (click)="DeleteGV(element)">delete</mat-chip>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef style="font-family: 'Times New Roman', Times, serif;font-size: 18px; color:black">
+        <h4>edit</h4>
+      </th>
+      <td mat-cell *matCellDef="let element"><button (click) = "openModal(edit,element)">edit</button>  </td>
+  </ng-container>
   <tr mat-header-row *matHeaderRowDef="colums"></tr>
   <tr mat-row *matRowDef="let row; columns: colums;"></tr>
 </table>
 
-  <!-- modal -->
-  
-
-    <button type="button" class="btn btn-primary" (click)="openModal(template)">Insert</button>
- 
-    <ng-template #template>
-      <div class="modal-header">
-        <h4 class="modal-title pull-left">Thông tin chi tiết giáo viên</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-          <form>
-              <div class="form-group">
-                <label>Id</label>
-                <input type="number" class="form-control" [(ngModel)]="giaovien.id" name="id" placeholder="stt">
-              </div>
-              <div class="form-group">
-                <label >name</label>
-                <input type="text" class="form-control" [(ngModel)]="giaovien.name" placeholder="name" name="name">
-              </div>
-              <mat-chip-list>
-                  <mat-chip color="accent" selected style="margin-top: 10px;margin-left: 20px;font-family: 'Times New Roman', Times, serif;font-size: 16px;" (click)="addGV()">submit</mat-chip>
-                  <mat-chip color="primary" selected style="margin-top: 10px;margin-left: 20px;font-family: 'Times New Roman', Times, serif;font-size: 16px;"(click)="onDelete()">delete</mat-chip>
-                  <mat-chip style="margin-top: 10px;margin-left: 20px;font-family: 'Times New Roman', Times, serif;font-size: 16px;">close</mat-chip>
-                </mat-chip-list>
-              
-            </form>
-      </div>
-    </ng-template>
+<!-- modal -->
 
 
-    <button type="button" class="btn btn-primary" (click)="openModal(template)">Update</button>
- 
-    <ng-template #hehe >
-      <div class="modal-header">
-        <h4 class="modal-title pull-left">Thông tin chi tiết giáo viên</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-          <span aria-hidden="true">&times;</span>
-        </button>
+<button type="button" class="btn btn-primary" (click)="openModal(template)">Insert</button>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Thông tin chi tiết giáo viên</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+
+      <div class="form-group">
+        <label>name</label>
+        <input type="text" class="form-control" [(ngModel)]="giaovien.name" placeholder="name" name="name">
       </div>
-      <div class="modal-body">
-          <form>
-              <div class="form-group">
-                <label>stt</label>
-                <input type="nubmer" class="form-control"  [(ngModel)]="giaovien.id" name="id" placeholder="stt">
-              </div>
-              <div class="form-group">
-                <label >name</label>
-                <input type="text" class="form-control" [(ngModel)]="giaovien.name" placeholder="name" name="name">
-              </div>
-              <mat-chip-list>
-                  <mat-chip color="accent" selected style="margin-top: 10px;margin-left: 20px;font-family: 'Times New Roman', Times, serif;font-size: 16px;"  >submit</mat-chip>
-                  <mat-chip color="primary" selected style="margin-top: 10px;margin-left: 20px;font-family: 'Times New Roman', Times, serif;font-size: 16px;">delete</mat-chip>
-                  <mat-chip style="margin-top: 10px;margin-left: 20px;font-family: 'Times New Roman', Times, serif;font-size: 16px;">close</mat-chip>
-                </mat-chip-list>
-              
-            </form>
+      <mat-chip-list>
+        <mat-chip color="accent" selected style="margin-top: 10px;margin-left: 20px;font-family: 'Times New Roman', Times, serif;font-size: 16px;"
+          (click)="addGV()">submit</mat-chip>
+        <mat-chip style="margin-top: 10px;margin-left: 20px;font-family: 'Times New Roman', Times, serif;font-size: 16px;">close</mat-chip>
+      </mat-chip-list>
+
+    </form>
+  </div>
+</ng-template>
+
+
+<button type="button" class="btn btn-primary">Update</button>
+
+<ng-template #edit>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Hiển thị thông tin chi tiết chỉnh sửa</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label>name</label>
+        <input type="text" class="form-control" [(ngModel)]="giaovien.name" placeholder="name" name="name">
       </div>
-    </ng-template>
+      <mat-chip-list>
+        <mat-chip color="accent" selected style="margin-top: 10px;margin-left: 20px;font-family: 'Times New Roman', Times, serif;font-size: 16px;"
+          (click)=updateGV(giaovien)>submit</mat-chip>
+        <mat-chip style="margin-top: 10px;margin-left: 20px;font-family: 'Times New Roman', Times, serif;font-size: 16px;">close</mat-chip>
+      </mat-chip-list>
+
+    </form>
+  </div>
+</ng-template>
